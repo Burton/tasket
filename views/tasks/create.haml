@@ -1,0 +1,12 @@
+%form{ :action => "/task/create", :method => "post"}
+  %label Task:
+  %input{ :name => "body", :type => "text", :size => "30"}
+  %br
+  %a{:href => "#", :id => "show_tasked_input"} task someone
+  
+  #tasked
+    %label Who?
+    %input{ :name => "tasked_email", :type => "text", :size => "30"} 
+    (provide email address)
+  %br
+  %input{ :name => "submit", :type => "submit", :value => "Submit"}

@@ -5,4 +5,6 @@ module Helpers
     1.upto(len) { |i| str << chars[rand(chars.size-1)] }
     return str
   end
+  
+  
 end

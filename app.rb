@@ -2,7 +2,7 @@ require 'rubygems'
 require 'fileutils'
 require 'sinatra'
 require 'json'
-
+require 'Haml'
 
 
 require 'config/database'
@@ -15,7 +15,16 @@ enable :sessions
 set :views, File.dirname(__FILE__) + '/views'
 set :public, File.dirname(__FILE__) + '/public'
 
+@env["HTTP_X_REQUESTED_WITH"] == "XMLHttpRequest" 
 
+mime :json, “application/json”
+
+before do
+  if logged_in?
+    @new_tasks = Task.all(:tasked_id => logged_in_user.id).count(:status => 0)
+    @tasked = Task.all(:tasked_by_id => logged_in_user.id, :tasked_id.not => logged_in_user.id).count(:status => 0)
+  end
+end
 
 
 ## ROUTING
@@ -27,7 +36,7 @@ get '/' do
 end
 
 get '/user/login' do
-  haml :login
+  haml :'users/login'
 end
 
 post '/user/login' do
@@ -47,7 +56,7 @@ get '/user/logout' do
 end
 
 get '/user/create' do
-  haml :create
+  haml :'users/create'
 end
 
 post '/user/create' do
@@ -57,7 +66,7 @@ post '/user/create' do
   u.email = params["email"]
   if u.save
     flash("User created")
-    redirect '/user/list'
+    redirect '/users/list'
   else
     tmp = []
     u.errors.each do |e|
@@ -68,9 +77,105 @@ post '/user/create' do
   end
 end
 
+get '/users/list' do
+  @u = User.all
+  haml :'users/index'
+end
+
+# TASKS
+
+get '/task/create' do
+  haml :'tasks/create'
+end
+
+post '/task/create' do
+  t = Task.new
+  @tasked_by = logged_in_user
+  @tasked = logged_in_user
+  if params["tasked_email"]
+    # you be taskin'
+    unless User.first(:email => params["tasked_email"])
+      flash("aint no user with that email address, son") 
+      redirect '/task/create'
+    end
+    @tasked = User.first(:email => params["tasked_email"])
+    
+  end
 
 
-##HElPER METHODS
-helpers do
+
+
+  # 
+  #   begin
+  #     @tasked = User.first(:email => params["tasked_email"])
+  #   rescue 
+  #     flash("you can't task that person...")
+  #     redirect '/task/create'
+  #   end
+  # else
+  #   @tasked = logged_in_user
+  # end
+  
+  t.body = params["body"]
+  t.tasked_id = @tasked.id
+  t.tasked_by_id = @tasked_by.id
+  if t.save
+    #foo
+    redirect '/tasks'
+  else
+    flash("errors, byatch")
+    redirect '/task/create'
+  end
+  haml :'tasks'
+end
+
+get '/task/update' do
+  
+  
 
 end
+
+post '/task/update' do
+  
+  task = Task.first(params[:id]) unless params[:id]
+  
+  if request.xhr?
+    content_type :json
+    task.to_json
+  else
+    # foo!
+  end
+  #redirect '/' unless self.request.env['HTTP_X_REQUESTED_WITH'] and self.request.env['HTTP_X_REQUESTED_WITH'].scan(/XML/) # Don't redirect Ajax request...
+  
+  
+  # if request.xhr? 
+  #   content_type :json
+  #     {:id => 1, :foo => 'bar'}.to_json
+  # else
+  #   # foo
+  # end
+end
+
+get '/tasks' do
+  if logged_in?
+    @tasks = Task.all(:tasked_id => logged_in_user.id, :status.gt => -1)
+    haml :'tasks/index'
+  else
+    redirect '/'
+  end
+end
+
+get '/tasked' do
+  if logged_in?
+    @tasks = Task.all(:tasked_by_id => logged_in_user.id, :tasked_id.not => logged_in_user.id, :status.gt => -1)
+    haml :'tasks/index'
+  else
+    redirect '/'
+  end
+end
+
+get '/task/:id' do
+  
+end
+
+

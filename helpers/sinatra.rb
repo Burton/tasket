@@ -4,6 +4,11 @@ helpers do
     nil
   end
 
+  def logged_in_user
+    return session[:user] if logged_in?
+    nil
+  end
+
   def link_to(name, location, alternative = false)
     if alternative and alternative[:condition]
       "<a href=#{alternative[:location]}>#{alternative[:name]}</a>"
@@ -27,7 +32,14 @@ helpers do
     if session[:flash]
       tmp = session[:flash]
       session[:flash] = false
-      "<fieldset><legend>Notice</legend><p>#{tmp}</p></fieldset>"
+      "<div class=\"flash_msg\"><h2>Notice</h2><p>#{tmp}</p></div>"
     end
   end
+  
+  
+  def human_date(datetime)
+    datetime.strftime('%d/%m/%Y').gsub(/ 0(\d{1})/, ' /1')
+  end
+  
+  
 end
