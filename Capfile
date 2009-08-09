@@ -44,7 +44,7 @@ namespace :deploy do
   end
 end
 
-namespace :iwrtw do
+namespace :tasket do
   task :log do
     run "cat #{deploy_to}/current/log/thin.log"
   end
