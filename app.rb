@@ -142,9 +142,11 @@ post '/task/update' do
   task.status = params[:status] if params[:status]
   if task.save
     if request.xhr?
+      mime :json, "application/json"
       content_type :json
-      #task.to_json
-      
+      task.to_json
+      puts "foo!!!!!!!!!!\n\n\n\n\n\n\n\n\n\n\n\n\n"
+      "{foo: 'bar'}"
     else
       # foo!
     end

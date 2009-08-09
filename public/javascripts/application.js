@@ -5,31 +5,24 @@ $(document).ready(function() {
   });
 
 	$(".complete_task").click(function() {
-		var task_li = $(this).parent();
+		var task_li = $(this).parent().parent();
 		var action_link = $(this);
 		var task_li_id = task_li.attr("id");
 		var task_id = parseInt(task_li_id.replace('task_',''));
-		//alert(task_id);
 		$.post("/task/update", { id: task_id, status: 1 }, function(data) {
-			action_link.html("foo");
-		}, "json" );
-		// $.post("/task/update", { "id": task_id, "status": 1 }, function(data) {
-		// 		// $.post("/task/update", {id: task_id, status: 1}, function(data) {
-		//        action_link.html(
-		//          "foo"
-		//        );
-		//      }, "json");
+			action_link.parent().remove();
+			task_li.animate({ backgroundColor: "#00FF55" }, 500);
+		} );
 	});
-	$("#remove_task").click(function() {
-		var task_li = $(this).parent();
+	$(".remove_task").click(function() {
+		var task_li = $(this).parent().parent();
 		var action_link = $(this);
 		var task_li_id = task_li.attr("id");
 		var task_id = parseInt(task_li_id.replace('task_',''));
-		$.post("/task/update", {task: {status: -1}}, function(data) {
-       action_link.html(
-         "foo"
-       );
-     }, "json");
+		$.post("/task/update", { id: task_id, status: -1 }, function(data) {
+			action_link.parent().remove();
+			task_li.animate({ backgroundColor: "#FF0066" }, 500);
+		} );
 	});
 	
 });

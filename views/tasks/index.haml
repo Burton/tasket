@@ -11,7 +11,8 @@
       - # tasked
       %p= "tasked by: #{User.first(:id => task.tasked_by_id).login} (#{User.first(:id => task.tasked_by_id).email})"
     - if task.tasked_id == logged_in_user.id
-      %a{:href => "#", :class => "complete_task"} mark completed
-      |
-      %a{:href => "#", :class => "remove_task"} remove
+      %p
+        %a{:href => "#", :class => "complete_task"} mark completed
+        |
+        %a{:href => "#", :class => "remove_task"} remove
     %hr
