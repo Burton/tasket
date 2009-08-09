@@ -28,6 +28,8 @@ configure :production do
     :adapter  => 'mysql',
     :host => 'localhost',
     :database => 'tasket_production',
-    :username => 'tasket',
-    :password => ''})  
+    :username => 'frank',
+    :password => 'mi3yl-Pr98fRo'})  
 end
+
+

@@ -1,0 +1,208 @@
+upstream tasket {
+	server 127.0.0.1:8000;
+}
+
+server { 
+  listen 80;
+  server_name 127.0.0.1 live;
+  access_log /home/sinatra/tasket/current/log/thin.log;
+  root /home/sinatra/tasket/current;
+  error_log /home/sinatra/tasket/current/log/error.log;
+
+  location / {
+    proxy_pass http://tasket;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+server {
+	listen       80;
+	server_name  localhost;
+
+  charset koi8-r;
+
+  access_log  logs/host.access.log  main;
+
+	location / {
+  	root   html;
+    index  index.html index.htm;
+  }
+
+  error_page  404              /404.html;
+
+  #redirect server error pages to the static page /50x.html
+    
+  error_page   500 502 503 504  /50x.html;
+  location = /50x.html {
+  	root   html;
+  }
+
+  #proxy the PHP scripts to Apache listening on 127.0.0.1:80
+    
+  location ~ \.php$ {
+  	proxy_pass   http://127.0.0.1;
+	}
+
+  #pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    
+  location ~ \.php$ {
+  	root           html;
+    fastcgi_pass   127.0.0.1:9000;
+    fastcgi_index  index.php;
+    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+    include        fastcgi_params;
+  }
+
+  #deny access to .htaccess files, if Apache's document root
+  #concurs with nginx's one
+    
+  location ~ /\.ht {
+  	deny  all;
+  }
+}
+
+
+
+
+
+
+
+
+
+server {
+
+            listen   80;
+            server_name  www.pulse-labs.com;
+            rewrite ^/(.*) http://pulse-labs.com/$1 permanent;
+
+           }
+
+
+server {
+
+            listen   80;
+            server_name pulse-labs.com;
+						access_log /var/www/pulse-labs.com/logs/access.log;
+						error_log /var/www/pulse-labs.com/logs/error.log;
+
+
+            location / {
+
+                        root   /var/www/pulse-labs.com/public_html/;
+                        index  index.html;
+
+                        }
+
+            }
+
+############################
+# APACHE default
+############################
+
+<VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+	
+	DocumentRoot /var/www/
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /var/www/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride None
+		Order allow,deny
+		allow from all
+		# This directive allows us to have apache2's default start page
+                # in /apache2-default/, but still have / go to the right place
+                RedirectMatch ^/$ /apache2-default/
+	</Directory>
+
+	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+	<Directory "/usr/lib/cgi-bin">
+		AllowOverride None
+		Options ExecCGI -MultiViews +SymLinksIfOwnerMatch
+		Order allow,deny
+		Allow from all
+	</Directory>
+
+	ErrorLog /var/log/apache2/error.log
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel warn
+
+	CustomLog /var/log/apache2/access.log combined
+	ServerSignature On
+
+    Alias /doc/ "/usr/share/doc/"
+    <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+</VirtualHost>
+
+
+
+
+
+<VirtualHost *:80>
+  ServerName robotswillkillusall.com
+  ServerAlias www.robotswillkillusall.com
+
+  DocumentRoot /var/www/robotswillkillusall.com/html
+
+  <Directory "/var/www/robotswillkillusall.com/html/">
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride AuthConfig
+                Order allow,deny
+                allow from all
+  </Directory>
+
+  ErrorLog /var/log/apache2/robotswillkillusall.com-error.log
+
+  LogLevel warn
+
+  CustomLog /var/log/apache2/robotswillkillusall.com-access.log combined
+  ServerSignature On
+
+
+</VirtualHost>
+
+
+
+
+<VirtualHost *:80>
+  ServerName pulse-labs.com
+  ServerAlias www.pulse-labs.com
+
+  DocumentRoot /var/www/pulse-labs.com/html
+
+  <Directory "/var/www/pulse-labs.com/html/">
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride AuthConfig
+                Order allow,deny
+                allow from all
+  </Directory>
+
+  ErrorLog /var/log/apache2/pulse-labs.com-error.log
+
+  LogLevel warn
+
+  CustomLog /var/log/apache2/pulse-labs.com-access.log combined
+  ServerSignature On
+
+
+</VirtualHost>
