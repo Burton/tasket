@@ -77,10 +77,44 @@ post '/user/create' do
   end
 end
 
+get '/user/account' do
+  if logged_in?
+    @user = logged_in_user
+    haml :'users/account'
+  else 
+    flash("you need to log in to manage your account, existing or otherwise.")
+    redirect '/'
+  end
+end
+post '/user/account' do
+  if logged_in?
+    u = logged_in_user
+    u.password = params["password"]
+    if u.save
+      flash("Account updated")
+      redirect '/tasks'
+    else
+      tmp = []
+      u.errors.each do |e|
+        tmp << (e.join("<br/>"))
+      end
+      flash(tmp)
+      redirect '/tasks'
+    end
+  else 
+    flash("you need to log in to manage your account, existing or otherwise.")
+    redirect '/'
+  end
+end
+
 get '/users/list' do
   @u = User.all
   haml :'users/index'
 end
+
+
+
+
 
 # TASKS
 

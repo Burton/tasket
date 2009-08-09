@@ -62,6 +62,15 @@ a:hover, a:visited:hover {
 #menu a:hover {
 	
 }
+
+#main_menu a.user_name_action, #main_menu a.user_name_action:visited {
+	color: #121212;
+	font-weight: bold;
+}
+#main_menu a.user_name_action:hover {
+	color: #121212;
+	border-bottom: 1px dotted #121212;
+}
 #container {
 	
 }

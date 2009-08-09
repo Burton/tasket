@@ -17,10 +17,10 @@
             = link_to 'Sign Up', '/user/create' unless logged_in?
           %li
             - if logged_in?
-              %h3= "oh hi, <b>#{logged_in_user.login}</b>"
+              %h3= "oh hi, <a class='user_name_action' href='/user/account'>#{logged_in_user.login}</a>"
             = link_to 'Login', '/user/login', {:condition => logged_in?, :location => '/user/logout', :name => 'Logout'}
           %li
-            = link_to 'Your account', '/' if logged_in?
+            = link_to 'Your account', '/user/account' if logged_in?
         
       #sub_menu
         %ul
