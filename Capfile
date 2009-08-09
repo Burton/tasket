@@ -2,7 +2,7 @@ load 'deploy' if respond_to?(:namespace)
 
 set :application, 'tasket'
 set :user, 'sinatra'
-set :domain, '67.23.27.150'
+set :domain, '209.20.80.6'
 ssh_options[:port] = 4330
 
 default_run_options[:pty] = true

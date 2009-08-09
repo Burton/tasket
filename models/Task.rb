@@ -33,4 +33,18 @@ class Task
     end
   end
   
+  def completed_tasks
+    self.get(:status => 1)
+  end
+  
+  def deleted_tasks
+    self.get(:status => -1)
+  end
+  
+  def active_tasks
+    self.get(:status => 0)
+  end
+  
+  
+  
 end

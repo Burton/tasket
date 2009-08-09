@@ -15,9 +15,9 @@ enable :sessions
 set :views, File.dirname(__FILE__) + '/views'
 set :public, File.dirname(__FILE__) + '/public'
 
-@env["HTTP_X_REQUESTED_WITH"] == "XMLHttpRequest" 
+#@env["HTTP_X_REQUESTED_WITH"] == "XMLHttpRequest" 
 
-mime :json, “application/json”
+mime :json, "application/json"
 
 before do
   if logged_in?
@@ -136,29 +136,30 @@ get '/task/update' do
 end
 
 post '/task/update' do
-  
-  task = Task.first(params[:id]) unless params[:id]
-  
-  if request.xhr?
-    content_type :json
-    task.to_json
-  else
-    # foo!
+  # puts "status: #{json_params.to_s}"
+  task = Task.get(params[:id])
+  puts task.body
+  task.status = params[:status] if params[:status]
+  if task.save
+    if request.xhr?
+      content_type :json
+      #task.to_json
+      
+    else
+      # foo!
+    end
+    
+    redirect '/' unless self.request.env['HTTP_X_REQUESTED_WITH'] and self.request.env['HTTP_X_REQUESTED_WITH'].scan(/XML/) # Don't redirect Ajax request...
+  else 
+    flash("errors, byatch")
   end
-  #redirect '/' unless self.request.env['HTTP_X_REQUESTED_WITH'] and self.request.env['HTTP_X_REQUESTED_WITH'].scan(/XML/) # Don't redirect Ajax request...
-  
-  
-  # if request.xhr? 
-  #   content_type :json
-  #     {:id => 1, :foo => 'bar'}.to_json
-  # else
-  #   # foo
-  # end
 end
 
 get '/tasks' do
   if logged_in?
-    @tasks = Task.all(:tasked_id => logged_in_user.id, :status.gt => -1)
+    @tasks = Task.all(:tasked_id => logged_in_user.id, :status => 0)
+    @completed_tasks = Task.all(:tasked_id => logged_in_user.id, :status => 1)
+    @deleted_tasks = Task.all(:tasked_id => logged_in_user.id, :status => -1)
     haml :'tasks/index'
   else
     redirect '/'

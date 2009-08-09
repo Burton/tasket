@@ -10,16 +10,19 @@
     .content
       #header
         %h1 tasket
-      #menu
+      #main_menu
         %ul
           %li
             = link_to 'Sign Up', '/user/create' unless logged_in?
           %li
             - if logged_in?
-              %h3= "#{logged_in_user.login}"
+              %h3= "oh hi, <b>#{logged_in_user.login}</b>"
             = link_to 'Login', '/user/login', {:condition => logged_in?, :location => '/user/logout', :name => 'Logout'}
           %li
             = link_to 'Your account', '/' if logged_in?
+        
+      #sub_menu
+        %ul
           %li
             = link_to "Your Tasks #{'('+@new_tasks.to_s+')' if @new_tasks>0}", '/tasks' if logged_in?
             |

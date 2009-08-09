@@ -1,17 +1,17 @@
 %ul
 - @tasks.each do |task|
-  %li{:id => "task_#{task.id}"}
-    %p= "Task: #{task.body}"
-    %p= "Created on: #{human_date(task.created_at)}"
+  %li{:id => "task_#{task.id}", :class => "task_element"}
+    %p= "<span>Task:</span> #{task.body}"
+    %p= "<span>Created on:</span> #{human_date(task.created_at)}"
     - if task.tasked_by_id == logged_in_user.id && task.tasked_id != logged_in_user.id
       - # tasks
-      %p= "tasked: #{User.first(:id => task.tasked_id).login}  (#{User.first(:id => task.tasked_id).email})"
+      %p= "<span>tasked:</span> #{User.first(:id => task.tasked_id).login}  (#{User.first(:id => task.tasked_id).email})"
 
     - if task.tasked_by_id != logged_in_user.id
       - # tasked
       %p= "tasked by: #{User.first(:id => task.tasked_by_id).login} (#{User.first(:id => task.tasked_by_id).email})"
     - if task.tasked_id == logged_in_user.id
-      %a{:href => "#", :id => "complete_task"} mark completed
+      %a{:href => "#", :class => "complete_task"} mark completed
       |
-      %a{:href => "#", :id => "remove_task"} remove
+      %a{:href => "#", :class => "remove_task"} remove
     %hr
