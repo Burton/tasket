@@ -2,6 +2,7 @@ load 'deploy' if respond_to?(:namespace)
 
 set :application, 'tasket'
 set :user, 'sinatra'
+set :password, '$1u3tOUST0aC!ie'
 set :domain, '209.20.80.6'
 ssh_options[:port] = 8560
 

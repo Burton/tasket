@@ -31,5 +31,3 @@ configure :production do
     :username => 'frank',
     :password => 'mi3yl-Pr98fRo'})  
 end
-
-
