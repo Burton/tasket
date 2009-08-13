@@ -9,7 +9,7 @@ ssh_options[:port] = 8560
 default_run_options[:pty] = true
 set :scm, :git
 set :scm_passphrase, "f00lessthanb4r"
-set :repository,  'git@github.com:bisceglie/tasket.git'
+set :repository, "git@github.com:bisceglie/tasket.git"
 set :deploy_via, :remote_cache
 set :deploy_to, "/home/sinatra/#{application}"
 set :branch, 'master'

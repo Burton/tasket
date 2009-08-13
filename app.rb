@@ -179,7 +179,6 @@ post '/task/update' do
       mime :json, "application/json"
       content_type :json
       task.to_json
-      puts "foo!!!!!!!!!!\n\n\n\n\n\n\n\n\n\n\n\n\n"
       "{foo: 'bar'}"
     else
       # foo!
