@@ -2,7 +2,7 @@ require 'rubygems'
 require 'fileutils'
 require 'sinatra'
 require 'json'
-require 'Haml'
+require 'haml'
 
 
 require 'config/database'
