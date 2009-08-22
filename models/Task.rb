@@ -14,8 +14,8 @@ class Task
   property :updated_at, DateTime
   property :closed_at, DateTime
   
-  belongs_to :tasked, :class => User, :child_key => [:tasked_id]
-  belongs_to :tasked_by, :class => User, :child_key => [:tasked_by_id]
+#  belongs_to :tasked, :class => User, :child_key => [:tasked_id]
+#  belongs_to :tasked_by, :class => User, :child_key => [:tasked_by_id]
   
   validates_present :tasked_id, :body
   validates_is_unique :body, :scope => :tasked_id,

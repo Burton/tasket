@@ -126,7 +126,7 @@ post '/task/create' do
   t = Task.new
   @tasked_by = logged_in_user
   @tasked = logged_in_user
-  if params["tasked_email"]
+  if params["tasked_email"] && params["tasked_email"].length > 0
     # you be taskin'
     unless User.first(:email => params["tasked_email"])
       flash("aint no user with that email address, son") 

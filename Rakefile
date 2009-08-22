@@ -1,6 +1,12 @@
 require 'rubygems'
 require 'sinatra'
 require 'dm-core'
+require "spec/rake/spectask"
+
+desc "Run all specs in spec directory"
+Spec::Rake::SpecTask.new(:spec) do |t|
+  t.spec_files = FileList["spec/*_spec.rb"]
+end
 
 namespace :db do
   require 'config/database'
@@ -8,6 +14,16 @@ namespace :db do
   desc "Migrate the database"
   task :migrate do
     DataMapper.auto_migrate!
+  end
+  
+  desc "Add admin users"
+  task :adminusers do
+    us = User.new
+    us.login = "admin"
+    us.email = "me@alexbisceglie.com"
+    us.password = "foobar"
+    us.save
+    
   end
   
   desc "Add some test users"
