@@ -7,6 +7,7 @@ require 'dm-timestamps'
 require 'models/User'
 require 'models/Task'
 
+
 configure :development do
   DataMapper.setup(:default, {
     :adapter  => 'mysql',
@@ -14,6 +15,7 @@ configure :development do
     :database => 'tasket_development',
     :username => 'root',
     :password => ''})
+  #DataMapper.auto_migrate!
 end
 configure :test do
   DataMapper.setup(:default, {
@@ -31,3 +33,4 @@ configure :production do
     :username => 'frank',
     :password => 'mi3yl-Pr98fRo'})  
 end
+

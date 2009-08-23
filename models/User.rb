@@ -17,7 +17,7 @@ class User
   
   validates_present :login, :email
   validates_is_unique :email, :login
-  validates_with_method :login_not_reserved
+  #validates_with_method :login_not_reserved
   
   def login_not_reserved
     reserved_logins = ['admin','tasket','boner','alex','alexb','bisceglie','alexbisceglie','burton','task','tasked'] #hack some shit to generate interpolations of task...

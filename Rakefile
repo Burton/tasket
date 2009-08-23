@@ -1,12 +1,12 @@
 require 'rubygems'
 require 'sinatra'
 require 'dm-core'
-require "spec/rake/spectask"
+#require "spec/rake/spectask"
 
-desc "Run all specs in spec directory"
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.spec_files = FileList["spec/*_spec.rb"]
-end
+# desc "Run all specs in spec directory"
+# Spec::Rake::SpecTask.new(:spec) do |t|
+#   t.spec_files = FileList["spec/*_spec.rb"]
+# end
 
 namespace :db do
   require 'config/database'

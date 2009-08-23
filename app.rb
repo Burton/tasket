@@ -211,7 +211,7 @@ get '/tasked' do
 end
 
 get '/task/:id' do
-  
+  redirect '/'
 end
 
 

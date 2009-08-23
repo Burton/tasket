@@ -25,6 +25,7 @@ html {
 }
 body {
 	padding: 20px;
+	text-align: center;
 }
 
 a, a:visited {
@@ -37,10 +38,12 @@ a:hover, a:visited:hover {
 }
 
 .content {
+	margin: 0 auto;
 	width: 900px;
 }
 #header {
 	width: 100px;
+	margin:0 auto;
 }
 #header h1 {
 	font-weight: bold;
