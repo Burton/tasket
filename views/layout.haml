@@ -27,7 +27,7 @@
           %li
             = link_to "Your Tasks #{'('+@new_tasks.to_s+')' if @new_tasks>0}", '/tasks' if logged_in?
             |
-            = link_to "Tasked Tasks #{'('+@tasked.to_s+')' if @tasked>0}", '/tasked' if logged_in?
+            = link_to "Tasks for others #{'('+@tasked.to_s+')' if @tasked>0}", '/tasked' if logged_in?
             |
             = link_to "New Task", '/task/create' if logged_in?
 

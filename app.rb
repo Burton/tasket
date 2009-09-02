@@ -32,11 +32,11 @@ enable :sessions
 
 get '/' do
   @u = session[:user]
-  haml :index
+  erb :index
 end
 
 get '/user/login' do
-  haml :'users/login'
+  erb :'users/login'
 end
 
 post '/user/login' do
@@ -56,7 +56,7 @@ get '/user/logout' do
 end
 
 get '/user/create' do
-  haml :'users/create'
+  erb :'users/create'
 end
 
 post '/user/create' do
@@ -80,7 +80,7 @@ end
 get '/user/account' do
   if logged_in?
     @user = logged_in_user
-    haml :'users/account'
+    erb :'users/account'
   else 
     flash("you need to log in to manage your account, existing or otherwise.")
     redirect '/'
@@ -109,7 +109,7 @@ end
 
 get '/users/list' do
   @u = User.all
-  haml :'users/index'
+  erb :'users/index'
 end
 
 
@@ -119,7 +119,7 @@ end
 # TASKS
 
 get '/task/create' do
-  haml :'tasks/create'
+  erb :'tasks/create'
 end
 
 post '/task/create' do
@@ -160,7 +160,7 @@ post '/task/create' do
     flash("errors, byatch")
     redirect '/task/create'
   end
-  haml :'tasks'
+  erb :'tasks'
 end
 
 get '/task/update' do
@@ -195,7 +195,7 @@ get '/tasks' do
     @tasks = Task.all(:tasked_id => logged_in_user.id, :status => 0)
     @completed_tasks = Task.all(:tasked_id => logged_in_user.id, :status => 1)
     @deleted_tasks = Task.all(:tasked_id => logged_in_user.id, :status => -1)
-    haml :'tasks/index'
+    erb :'tasks/index'
   else
     redirect '/'
   end
@@ -204,7 +204,7 @@ end
 get '/tasked' do
   if logged_in?
     @tasks = Task.all(:tasked_by_id => logged_in_user.id, :tasked_id.not => logged_in_user.id, :status.gt => -1)
-    haml :'tasks/index'
+    erb :'tasks/index'
   else
     redirect '/'
   end

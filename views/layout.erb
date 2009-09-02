@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>	
+	<title>If We Ran The World: Beta</title>
+	<link media="screen" rel="stylesheet" type="text/css" href="stylesheets/main.css">
+	
+	<script type="text/javascript" src="javascripts/jquery.js"></script>
+	<script type="text/javascript" src="javascripts/jquery-ui.js"></script>
+	<script type="text/javascript" src="javascripts/application.js"></script>
+
+</head>
+
+<body>
+
+  <div class="content">
+    <div id="header">
+      <h1>tasket</h1>
+    <div id="main_menu">
+      <ul>
+        <li>
+          <%= link_to 'Sign Up', '/user/create' unless logged_in? %>
+        </li>
+				<li>
+          <% if logged_in? %>
+            <h3>oh hi, <a class='user_name_action' href='/user/account'><%= logged_in_user.login %></a></h3>
+					<% end %>
+          <%= link_to 'Login', '/user/login', {:condition => logged_in?, :location => '/user/logout', :name => 'Logout'} %>
+				</li>
+        <li>
+          <%= link_to 'Your account', '/user/account' if logged_in? %>
+				</li>
+      </ul>
+    <div id="sub_menu">
+      <ul>
+        <li>
+          <%= link_to "Your Tasks #{'('+@new_tasks.to_s+')' if @new_tasks>0}", '/tasks' if logged_in? %>
+          |
+          <%= link_to "Tasks for others #{'('+@tasked.to_s+')' if @tasked>0}", '/tasked' if logged_in? %>
+          |
+          <%= link_to "New Task", '/task/create' if logged_in? %>
+				</li>
+			</ul>
+
+    <hr />
+    <%= show_flash %>
+    <div id="container">
+
+				<%= yield %>
+		</div>
+
+	</div>
+</body>
+</html>
