@@ -47,7 +47,7 @@ get '/user/login' do
 end
 
 post '/user/login' do
-  if session[:user] = User.authenticate(params["login"], params["password"])
+  if session[:user] = User.authenticate(params["email"], params["password"])
     flash("Login successful")
     redirect '/'
   else

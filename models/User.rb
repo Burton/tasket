@@ -9,7 +9,7 @@ class User
   property :id,			Integer, 	:serial => true
   property :login,		String,  	:key => true, :length => (3..40), :nullable => false
   property :hashed_password, 	String
-  property :email,		String,		:format => :email_address
+  property :email,		String,	:key => true,	:format => :email_address, :nullable => false
   property :salt,		String
   property :created_at,		DateTime,	:default => DateTime.now
   
@@ -37,8 +37,8 @@ class User
     Digest::SHA1.hexdigest(pass + salt)
   end
   
-  def self.authenticate(login, pass)
-    u = User.first(:login => login)
+  def self.authenticate(email, pass)
+    u = User.first(:email => email)
     return nil if u.nil?
     return u if User.encrypt(pass, u.salt) == u.hashed_password
     nil
