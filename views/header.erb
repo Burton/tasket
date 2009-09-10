@@ -1,0 +1,34 @@
+<h1>tasket</h1>
+<div id="main_menu">
+  <ul>
+		<% unless logged_in? %>
+    <li>
+      <%= link_to 'Sign Up', '/user/create' %>
+    </li>
+		<% end %>
+		<li>
+      <% if logged_in? %>
+        <h3>oh hi, <a class='user_name_action' href='/user/account'><%= logged_in_user.login %></a></h3>
+			<% end %>
+      <%= link_to 'Login', '/user/login', {:condition => logged_in?, :location => '/user/logout', :name => 'Logout'} %>
+		</li>
+    <li>
+      <%= link_to 'Your account', '/user/account' if logged_in? %>
+		</li>
+  </ul>
+</div>
+<div id="sub_menu">
+  <ul>
+    <li>
+      <%= link_to "Your Tasks #{'('+@new_tasks.to_s+')' if @new_tasks>0}", '/tasks' if logged_in? %>
+      |
+      <%= link_to "Tasks for others #{'('+@tasked.to_s+')' if @tasked>0}", '/tasked' if logged_in? %>
+      |
+      <%= link_to "New Task", '/task/create' if logged_in? %>
+		</li>
+	</ul>
+</div>
+
+<hr />
+
+<%= show_flash %>

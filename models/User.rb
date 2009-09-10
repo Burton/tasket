@@ -20,8 +20,11 @@ class User
   #validates_with_method :login_not_reserved
   
   def login_not_reserved
-    reserved_logins = ['admin','tasket','boner','alex','alexb','bisceglie','alexbisceglie','burton','task','tasked'] #hack some shit to generate interpolations of task...
-    if prohibited_logins.include? self.login.downcase
+    # TODO:
+    # hack some shit to generate interpolations of task...
+    # yet allow foo_task
+    reserved_logins = ['admin','tasket','alex','alexb','bisceglie','alexbisceglie','burton','task','tasks','tasked','tasking','tasker','user','users','account','manage','foo','bar'] 
+    if reserved_logins.include? self.login.downcase
       [false, "must be a valid login"]
     end
     return true

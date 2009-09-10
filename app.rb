@@ -42,6 +42,15 @@ get '/' do
   end
 end
 
+
+## start of new routing paradigm...
+get '/:user' do
+  erb :index
+end
+## ...end of new routing paradigm
+
+
+
 get '/user/login' do
   erb :'users/login'
 end
@@ -73,11 +82,11 @@ post '/user/create' do
   u.email = params["email"]
   if u.save
     flash("User created")
-    redirect '/users/list'
+    redirect '/users/login'
   else
     tmp = []
     u.errors.each do |e|
-      tmp << (e.join("<br/>"))
+      tmp << (e.join("<br />"))
     end
     flash(tmp)
     redirect '/user/create'
@@ -103,7 +112,7 @@ post '/user/account' do
     else
       tmp = []
       u.errors.each do |e|
-        tmp << (e.join("<br/>"))
+        tmp << (e.join("<br />"))
       end
       flash(tmp)
       redirect '/tasks'
@@ -120,6 +129,19 @@ get '/users/list' do
 end
 
 
+# this is really the only search method we need... 
+# can probably package it up real tight, do some kind of hyper-indexing on this shit, and chunk it over to the JS
+get '/users/search' do
+  if request.xhr?
+    mime :json, "application/json"
+    # loop through params (only search by email for now...)
+    # what kind of search we gonna use? what does git use?
+    # can probably get away with vanilla SQL for now...
+    
+  else
+    # really shouldn't be...  
+  end
+end
 
 
 

@@ -41,5 +41,9 @@ helpers do
     datetime.strftime('%d/%m/%Y').gsub(/ 0(\d{1})/, ' /1')
   end
   
+  def partial(page, options={})
+    erb page, options.merge!(:layout => false)
+  end
+  
   
 end

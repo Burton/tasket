@@ -26,3 +26,11 @@ $(document).ready(function() {
 	});
 	
 });
+
+
+// event listener on #tasked_email text-input to auto-populate option-list of valid users...
+$(document).ready(function() {
+	//$('#tasked_email').ready(function(){
+		// foo
+	//})
+});

@@ -18,6 +18,7 @@ class Task
 #  belongs_to :tasked_by, :class => User, :child_key => [:tasked_by_id]
   
   validates_present :tasked_id, :body
+  # define stronger scope - no same open tasks to same tasked & tasking.
   validates_is_unique :body, :scope => :tasked_id,
       :message => "already tasked this!"
   
