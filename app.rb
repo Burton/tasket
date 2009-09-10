@@ -32,7 +32,14 @@ enable :sessions
 
 get '/' do
   @u = session[:user]
-  erb :index
+  if logged_in?
+    @tasks = Task.all(:tasked_id => logged_in_user.id, :status => 0)
+    @completed_tasks = Task.all(:tasked_id => logged_in_user.id, :status => 1)
+    @deleted_tasks = Task.all(:tasked_id => logged_in_user.id, :status => -1)
+    erb :'tasks/index'
+  else
+    erb :index
+  end
 end
 
 get '/user/login' do

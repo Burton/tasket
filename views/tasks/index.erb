@@ -1,27 +1,45 @@
+<table class="tasks">
+	<tr>
+		<td class="task_headers">
+		<%= "You need to:" if request.path == "/tasks" %>
+		<%= "You assigned:" if request.path == "/tasked" %>
+		</td>
+		<td class="task_headers">
+		<%= "for:" if request.path == "/tasks" %>
+		<%= "to:" if request.path == "/tasked" %>
+		</td>
+		<td class="task_headers">Date:</td>
+		<td class="task_headers">
+			<%= "Nevermind" if request.path == "/tasked" %>
+			<%= "Done | Ignore" if request.path == "/tasks" %> 
 
-<ul>
+		</td>
 <% @tasks.each do |task| %>
-	<li id="task_<%= task.id %>" class="task_element">
-		<p><span>Task:</span> <%= task.body %></p>
-		<p><span>Created on:</span> <%= human_date(task.created_at) %></p>
-		<% if task.tasked_by_id == logged_in_user.id && task.tasked_id != logged_in_user.id %>
-			%p= "<span>tasked:</span> #{User.first(:id => task.tasked_id).login}  (#{User.first(:id => task.tasked_id).email})"
-			<p><span>tasked:</span> <%= User.first(:id => task.tasked_id).login %> (<%= User.first(:id => task.tasked_id).email %>)</p>
-		<% end %>
+	<tr id="task_<%= task.id %>" class="task_element">
+
+		<td class="tasks"><%= task.body %></td>
+
+
 		
-		<% if task.tasked_by_id != logged_in_user.id %>
-				<p>
-					tasked by: <%= User.first(:id => task.tasked_by_id).login %> (<%= User.first(:id => task.tasked_by_id).email %>)
-				</p>
-		<% end %>
+		<td class="tasks">
+			<% if task.tasked_by_id != logged_in_user.id %>				
+				<%= User.first(:id => task.tasked_by_id).login %> (<%= User.first(:id => task.tasked_by_id).email %>)				
+			<% elsif  task.tasked_by_id == logged_in_user.id && task.tasked_id == logged_in_user.id %>
+				<%= "yourself" %>
+			<% elsif task.tasked_by_id == logged_in_user.id && task.tasked_id != logged_in_user.id %>
+				<%= User.first(:id => task.tasked_id).login %> (<%= User.first(:id => task.tasked_id).email %>)
+			<% end %>
+		</td>
+		<td class="tasks"><%= human_date(task.created_at) %></td>
 		
-		<% if task.tasked_id == logged_in_user.id %>
-			<p>
-				<a href="#" class="complete_task">mark completed</a>
-				|
-				<a href="#" class="remove_task">remove</a>
-			</p>
-		<% end %>
-	</li>
+			<td class="tasks">
+				<% if task.tasked_id == logged_in_user.id %>
+					<a href="#" class="complete_task">:-)</a> | <a href="#" class="remove_task">X</a>
+				<% elsif task.tasked_by_id == logged_in_user.id && task.tasked_id != logged_in_user.id %>
+					X
+				<% end %>
+
+			</td>
+	</tr>
 <% end %>
-</ul>
+</table>
