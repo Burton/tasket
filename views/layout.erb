@@ -1,17 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>	
+<<<<<<< HEAD:views/layout.erb
 	<title>Tasket</title>
 	<link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/main.css">
 	
 	<script type="text/javascript" src="/javascripts/jquery.js"></script>
 	<script type="text/javascript" src="/javascripts/jquery-ui.js"></script>
 	<script type="text/javascript" src="/javascripts/application.js"></script>
+=======
+	<title>tasket</title>
+	<link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+	
+	<script type="text/javascript" src="javascripts/jquery.js"></script>
+	<script type="text/javascript" src="javascripts/jquery-ui.js"></script>
+	<script type="text/javascript" src="javascripts/application.js"></script>
+	<script type="text/javascript" src="javascripts/jquery-tabs.js"></script>
+>>>>>>> 97f2413831525d99d82bf84665afe777b68d113c:views/layout.erb
 
 </head>
 
 <body>
 
+<<<<<<< HEAD:views/layout.erb
   <div class="content">
 	
 		<div id="header">
@@ -21,7 +32,91 @@
 		<div id="container">
 
 				<%= yield %>
+=======
+	<div class="content">
+	    <div id="header">
+	      <h1>tasket</h1>
+	    </div>
+	    <div id="main_menu">
+	          <% unless logged_in? %>
+				<div class="tabs">
+					<ul class="tabNavigation">
+						<li><a href="#first">Login</a></li>
+						<li><a href="#second">Sign Up</a></li>
+					</ul>
+					<div id="first" style="width: 300px; height: 200px;">
+						<form action="/user/login" method="post">
+							<table class="login">
+							  <tr>
+							    <td width="100">Username</td>
+							    <td width="230"><input name="login" class="field" type="text" size="30" /></td>
+							  </tr>
+							  <tr>
+							    <td>Password</td>
+							    <td><input name="password" class="field"type="password" size="30" /></td>
+							  </tr>
+							  <tr>
+								<td><input class="submit" name="submit" type="submit" value="Go" /></td>
+								<td></td>
+							  </tr>
+							</table>
+						</form>
+					</div>
+					<div id="second" style="width: 300px;">
+						<form action="/user/create" method="post">
+							<table class="login">
+							  <tr>
+							    <td width="100">Username</td>
+							    <td width="230"><input class="field" name="login" type="text" size="30" /></td>
+							  </tr>
+							  <tr>
+							    <td>Password</td>
+							    <td><input name="password" class="field" type="password" size="30" /></td>
+							  </tr>
+							  <tr>
+							    <td>Email</td>
+							    <td><input name="email" class="field" type="text" size="30" /></td>
+							  </tr>
+							  <tr>
+								<td><input class="submit" name="submit" type="submit" value="Go" /></td>
+								<td></td>
+							  </tr>
+							</table>
+						</form>
+					</div>
+				</div>	
+			<% end %>
+		      <ul>
+					<li>
+	          <% if logged_in? %>
+	            <h3>oh hi, <a class='user_name_action' href='/user/account'><%= logged_in_user.login %></a></h3>
+						<% end %>
+					</li>        
+			<li>
+	          <%= link_to 'Logout', '/user/logout' if logged_in? %>
+			</li>
+	      </ul>
+		    <div id="sub_menu">
+		      <ul>
+		        <li>
+		          <% if logged_in? %>
+		          <%= link_to "Your Tasks #{'('+@new_tasks.to_s+')' if @new_tasks>0}", '/tasks' if logged_in? %>
+		          |
+		          <%= link_to "Tasks for others #{'('+@tasked.to_s+')' if @tasked>0}", '/tasked' if logged_in? %>
+		          |
+		          <%= link_to "New Task", '/task/create'  %>
+		          <% end %>
+						</li>
+					</ul>
+			</div>
 		</div>
+	    <%= show_flash %>
+	    <div id="container">
+	
+					<%= yield %>
+>>>>>>> 97f2413831525d99d82bf84665afe777b68d113c:views/layout.erb
+		</div>
+<p>About | Support | <%= link_to 'Your account', '/user/account' if logged_in? %></p>
 
 	</div>
 </body>
