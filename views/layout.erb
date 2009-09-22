@@ -1,38 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>	
-<<<<<<< HEAD:views/layout.erb
-	<title>Tasket</title>
-	<link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/main.css">
-	
-	<script type="text/javascript" src="/javascripts/jquery.js"></script>
-	<script type="text/javascript" src="/javascripts/jquery-ui.js"></script>
-	<script type="text/javascript" src="/javascripts/application.js"></script>
-=======
+
 	<title>tasket</title>
 	<link media="screen" rel="stylesheet" type="text/css" href="/stylesheets/main.css">
 	
 	<script type="text/javascript" src="javascripts/jquery.js"></script>
 	<script type="text/javascript" src="javascripts/jquery-ui.js"></script>
-	<script type="text/javascript" src="javascripts/application.js"></script>
 	<script type="text/javascript" src="javascripts/jquery-tabs.js"></script>
->>>>>>> 97f2413831525d99d82bf84665afe777b68d113c:views/layout.erb
+	<script type="text/javascript" src="javascripts/application.js"></script>
+
 
 </head>
 
 <body>
 
-<<<<<<< HEAD:views/layout.erb
-  <div class="content">
-	
-		<div id="header">
-			<%= partial :header %>
-		</div>
-    
-		<div id="container">
-
-				<%= yield %>
-=======
 	<div class="content">
 	    <div id="header">
 	      <h1>tasket</h1>
@@ -114,7 +96,6 @@
 	    <div id="container">
 	
 					<%= yield %>
->>>>>>> 97f2413831525d99d82bf84665afe777b68d113c:views/layout.erb
 		</div>
 <p>About | Support | <%= link_to 'Your account', '/user/account' if logged_in? %></p>
 

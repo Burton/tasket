@@ -37,7 +37,6 @@ get '/' do
     @completed_tasks = Task.all(:tasked_id => logged_in_user.id, :status => 1)
     @deleted_tasks = Task.all(:tasked_id => logged_in_user.id, :status => -1)
     erb :'tasks/index'
-<<<<<<< HEAD:app.rb
   else 
     erb :index
   end
@@ -47,11 +46,6 @@ end
 ## start of new routing paradigm...
 get '/:user' do
   erb :index
-=======
-  else
-    erb :index
-  end
->>>>>>> 97f2413831525d99d82bf84665afe777b68d113c:app.rb
 end
 ## ...end of new routing paradigm
 
